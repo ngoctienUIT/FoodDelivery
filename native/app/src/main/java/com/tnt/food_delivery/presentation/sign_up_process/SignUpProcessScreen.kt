@@ -50,8 +50,8 @@ import com.tnt.food_delivery.core.components.ShowLoading
 import com.tnt.food_delivery.core.components.showToast
 import com.tnt.food_delivery.core.utils.EventStatus
 import com.tnt.food_delivery.core.utils.NavDestinations
-import com.tnt.food_delivery.ui.components.GradientButton
 import com.tnt.food_delivery.ui.components.BackButton
+import com.tnt.food_delivery.ui.components.GradientButton
 import com.tnt.food_delivery.ui.components.shadow
 import com.tnt.food_delivery.ui.theme.FoodDeliveryTheme
 import kotlinx.coroutines.launch

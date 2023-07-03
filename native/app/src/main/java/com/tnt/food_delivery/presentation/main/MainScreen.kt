@@ -42,12 +42,11 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.tnt.food_delivery.R
-import com.tnt.food_delivery.presentation.filter.FilterScreen
 import com.tnt.food_delivery.presentation.home.HomeScreen
 import com.tnt.food_delivery.presentation.message.MessageScreen
+import com.tnt.food_delivery.presentation.newsfeed.NewsfeedScreen
 import com.tnt.food_delivery.presentation.notification.NotificationScreen
 import com.tnt.food_delivery.presentation.profile.ProfileScreen
-import com.tnt.food_delivery.presentation.upload_photo.UploadPhotoScreen
 import com.tnt.food_delivery.ui.theme.FoodDeliveryTheme
 import kotlinx.coroutines.launch
 
@@ -68,7 +67,7 @@ fun MainScreen(navController: NavController) {
 
     LaunchedEffect(pagerState) {
         snapshotFlow { pagerState.currentPage }.collect { index ->
-            currentIndex = index;
+            currentIndex = index
         }
     }
 
@@ -86,8 +85,8 @@ fun MainScreen(navController: NavController) {
                 when (index) {
                     0 -> HomeScreen(navController)
                     1 -> MessageScreen(navController)
-                    2 -> UploadPhotoScreen()
-                    3 -> NotificationScreen()
+                    2 -> NewsfeedScreen(navController)
+                    3 -> NotificationScreen(navController)
                     4 -> ProfileScreen(navController)
                 }
             }

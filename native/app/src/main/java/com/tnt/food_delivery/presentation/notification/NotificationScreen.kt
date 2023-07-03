@@ -28,6 +28,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.tnt.food_delivery.R
 import com.tnt.food_delivery.ui.components.BackButton
 import com.tnt.food_delivery.ui.components.shadow
@@ -35,7 +37,7 @@ import com.tnt.food_delivery.ui.theme.FoodDeliveryTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun NotificationScreen() {
+fun NotificationScreen(navController: NavController) {
     Scaffold {
         it
         Box {
@@ -127,6 +129,6 @@ fun ItemNotification(id: Int, title: String, time: String) {
 @Composable
 fun NotificationScreenPreview() {
     FoodDeliveryTheme {
-        NotificationScreen()
+        NotificationScreen(rememberNavController())
     }
 }

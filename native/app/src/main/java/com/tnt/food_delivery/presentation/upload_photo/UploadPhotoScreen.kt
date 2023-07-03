@@ -27,6 +27,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.tnt.food_delivery.R
 import com.tnt.food_delivery.ui.components.GradientButton
 import com.tnt.food_delivery.ui.components.BackButton
@@ -35,7 +37,7 @@ import com.tnt.food_delivery.ui.theme.FoodDeliveryTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UploadPhotoScreen() {
+fun UploadPhotoScreen(navController: NavController) {
     Scaffold {
         it
         Box {
@@ -117,6 +119,6 @@ fun CustomUploadPhoto(onClick: () -> Unit = { }, id: Int, text: String) {
 @Composable
 fun SignUpProcessPreview() {
     FoodDeliveryTheme {
-        UploadPhotoScreen()
+        UploadPhotoScreen(rememberNavController())
     }
 }

@@ -29,6 +29,7 @@ import com.tnt.food_delivery.presentation.sign_in.SignInScreen
 import com.tnt.food_delivery.presentation.sign_up.SignUpScreen
 import com.tnt.food_delivery.presentation.sign_up_process.SignUpProcessScreen
 import com.tnt.food_delivery.presentation.sign_up_success.SignUpSuccessScreen
+import com.tnt.food_delivery.presentation.upload_photo.UploadPhotoScreen
 import com.tnt.food_delivery.ui.theme.FoodDeliveryTheme
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -79,6 +80,9 @@ fun MyApp() {
                             password = password
                         )
                     }
+                }
+                composable(NavDestinations.UPLOAD_PHOTO_SCREEN) {
+                    UploadPhotoScreen(navController)
                 }
                 composable(NavDestinations.SIGNUP_SUCCESS_SCREEN) {
                     SignUpSuccessScreen(navController)
