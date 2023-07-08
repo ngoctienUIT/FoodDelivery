@@ -50,6 +50,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.tnt.food_delivery.R
+import com.tnt.food_delivery.data.response.UserResponse
 import com.tnt.food_delivery.ui.components.BackButton
 import com.tnt.food_delivery.presentation.restaurant_detail.components.IconRestaurant
 import com.tnt.food_delivery.presentation.restaurant_detail.components.ProductItem
@@ -61,7 +62,7 @@ import me.onebone.toolbar.rememberCollapsingToolbarScaffoldState
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
-fun RestaurantDetailScreen(navController: NavController) {
+fun RestaurantDetailScreen(navController: NavController, restaurant: UserResponse) {
     val state = rememberCollapsingToolbarScaffoldState()
     var visible by remember { mutableStateOf(true) }
     val configuration = LocalConfiguration.current
@@ -111,7 +112,7 @@ fun RestaurantDetailScreen(navController: NavController) {
                         exit = slideOutVertically() + shrinkVertically() + fadeOut()
                     ) {
                         Text(
-                            text = "Wijie Bar and Resto",
+                            text = restaurant.name!!,
                             fontWeight = FontWeight.Bold,
                             color = Color(0xFF09051C),
                             fontSize = 20.sp
@@ -125,7 +126,7 @@ fun RestaurantDetailScreen(navController: NavController) {
                         backgroundColor = if (state.toolbarState.progress == 0.0f) Color.Transparent
                         else Color.White.copy(0.55f)
                     ) {
-
+                        navController.popBackStack()
                     }
                 }
             }
@@ -220,7 +221,7 @@ fun RestaurantDetailScreen(navController: NavController) {
                                 )
                             }
                             Text(
-                                text = "Wijie Bar and Resto",
+                                text = restaurant.name!!,
                                 fontSize = 27.sp,
                                 color = Color(0xFF09051C),
                                 fontWeight = FontWeight.Bold
@@ -299,6 +300,6 @@ fun CustomItem(text: String, id: Int) {
 @Composable
 fun RestaurantDetailPreview() {
     FoodDeliveryTheme {
-        RestaurantDetailScreen(rememberNavController())
+        RestaurantDetailScreen(rememberNavController(), UserResponse())
     }
 }

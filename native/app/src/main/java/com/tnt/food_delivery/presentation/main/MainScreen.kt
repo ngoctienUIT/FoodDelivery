@@ -1,5 +1,6 @@
 package com.tnt.food_delivery.presentation.main
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -56,7 +57,7 @@ val tabs = listOf<Map<String, Any>>(
     mapOf("icon" to R.drawable.icon_home_disable, "title" to "Home"),
     mapOf("icon" to R.drawable.icon_no_notifiaction, "title" to "Notification"),
     mapOf("icon" to R.drawable.icon_profile_disable, "title" to "Profile"),
-    )
+)
 
 @OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
 @Composable
@@ -157,12 +158,13 @@ fun TabBarItem(index: Int, currentIndex: Int, onClick: () -> Unit) {
             )
             if (currentIndex == index)
                 Spacer(modifier = Modifier.width(5.dp))
-            if (currentIndex == index)
+            AnimatedVisibility(visible = currentIndex == index) {
                 Text(
                     text = tabs[index]["title"] as String,
                     fontSize = 14.sp,
                     fontWeight = FontWeight(700)
                 )
+            }
         }
     }
 }

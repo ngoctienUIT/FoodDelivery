@@ -18,12 +18,14 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.tnt.food_delivery.core.nav_type.ProductNavType
+import com.tnt.food_delivery.core.nav_type.UserNavType
 import com.tnt.food_delivery.core.utils.NavDestinations
 import com.tnt.food_delivery.data.response.ProductResponse
+import com.tnt.food_delivery.data.response.UserResponse
 import com.tnt.food_delivery.presentation.filter.FilterScreen
 import com.tnt.food_delivery.presentation.main.MainScreen
 import com.tnt.food_delivery.presentation.product_detail.ProductDetailScreen
-import com.tnt.food_delivery.presentation.product_detail.ProductNavType
 import com.tnt.food_delivery.presentation.restaurant_detail.RestaurantDetailScreen
 import com.tnt.food_delivery.presentation.sign_in.SignInScreen
 import com.tnt.food_delivery.presentation.sign_up.SignUpScreen
@@ -93,8 +95,25 @@ fun MyApp() {
                 composable(NavDestinations.FILTER_SCREEN) {
                     FilterScreen(navController)
                 }
-                composable(NavDestinations.RESTAURANT_DETAIL_SCREEN) {
-                    RestaurantDetailScreen(navController)
+                composable(
+                    "${NavDestinations.RESTAURANT_DETAIL_SCREEN}/{restaurant}",
+                    arguments = listOf(
+                        navArgument("restaurant") { type = UserNavType() },
+                    )
+                ) { backStackEntry ->
+                    val restaurant = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                        backStackEntry.arguments?.getParcelable(
+                            "restaurant",
+                            UserResponse::class.java
+                        )
+                    } else {
+                        @Suppress("DEPRECATION") backStackEntry.arguments?.getParcelable(
+                            "restaurant"
+                        )
+                    }
+                    if (restaurant != null) {
+                        RestaurantDetailScreen(navController, restaurant)
+                    }
                 }
                 composable(
                     "${NavDestinations.PRODUCT_DETAIL_SCREEN}/{product}",

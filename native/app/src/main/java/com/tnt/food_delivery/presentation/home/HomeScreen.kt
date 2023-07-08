@@ -223,7 +223,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
                     }
                 }
                 Spacer(modifier = Modifier.height(20.dp))
-                ShowListRestaurant(restaurants)
+                ShowListRestaurant(navController, restaurants)
                 Spacer(modifier = Modifier.height(20.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -248,7 +248,10 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel = hiltView
 }
 
 @Composable
-fun ShowListRestaurant(restaurants: EventResults<List<UserResponse>>?) {
+fun ShowListRestaurant(
+    navController: NavController,
+    restaurants: EventResults<List<UserResponse>>?
+) {
     if (restaurants != null
         && restaurants.status == EventStatus.SUCCESS
         && restaurants.data!!.isNotEmpty()
@@ -262,6 +265,15 @@ fun ShowListRestaurant(restaurants: EventResults<List<UserResponse>>?) {
                         modifier = Modifier
                             .height(180.dp)
                             .width(150.dp)
+                            .clickable {
+                                navController.navigate("${NavDestinations.RESTAURANT_DETAIL_SCREEN}/${restaurants.data[index]}") {
+                                    navController.graph.startDestinationRoute?.let { route ->
+                                        popUpTo(route) { saveState = true }
+                                    }
+                                    launchSingleTop = true
+                                    restoreState = true
+                                }
+                            }
                             .shadow(
                                 color = Color(0xFF5A6CEA).copy(alpha = 0.07f),
                                 spread = 25.dp,

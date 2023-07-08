@@ -51,11 +51,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import androidx.navigation.NavType
 import androidx.navigation.compose.rememberNavController
 import coil.compose.SubcomposeAsyncImage
 import coil.request.ImageRequest
-import com.google.gson.Gson
 import com.tnt.food_delivery.R
 import com.tnt.food_delivery.data.response.ProductResponse
 import com.tnt.food_delivery.ui.components.GradientButton
@@ -68,24 +66,6 @@ import com.tnt.food_delivery.ui.theme.FoodDeliveryTheme
 import me.onebone.toolbar.CollapsingToolbarScaffold
 import me.onebone.toolbar.ScrollStrategy
 import me.onebone.toolbar.rememberCollapsingToolbarScaffoldState
-
-class ProductNavType : NavType<ProductResponse>(isNullableAllowed = false) {
-    override fun get(bundle: Bundle, key: String): ProductResponse? {
-        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            bundle.getParcelable(key, ProductResponse::class.java)
-        } else {
-            @Suppress("DEPRECATION") bundle.getParcelable(key)
-        }
-    }
-
-    override fun parseValue(value: String): ProductResponse {
-        return Gson().fromJson(value, ProductResponse::class.java)
-    }
-
-    override fun put(bundle: Bundle, key: String, value: ProductResponse) {
-        bundle.putParcelable(key, value)
-    }
-}
 
 @OptIn(ExperimentalTextApi::class)
 @Composable
