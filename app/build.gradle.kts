@@ -9,7 +9,7 @@ plugins {
 
 android {
     namespace = "com.tnt.food_delivery"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.tnt.food_delivery"
@@ -58,19 +58,19 @@ dependencies {
 
     implementation("androidx.core:core-ktx:1.10.1")
     implementation("androidx.activity:activity-compose:1.7.2")
-    implementation("androidx.compose.ui:ui")
-    implementation("androidx.compose.ui:ui-graphics")
-    implementation("androidx.compose.ui:ui-tooling-preview")
-    implementation("androidx.compose.material3:material3")
+    implementation("androidx.compose.ui:ui:1.5.0")
+    implementation("androidx.compose.ui:ui-graphics:1.5.0")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.5.0")
+    implementation("androidx.compose.material3:material3:1.1.1")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4")
-    debugImplementation("androidx.compose.ui:ui-tooling")
-    debugImplementation("androidx.compose.ui:ui-test-manifest")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.0")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.5.0")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.0")
 
     // toolbar
     implementation("me.onebone:toolbar-compose:2.3.2")
@@ -94,7 +94,7 @@ dependencies {
 
     //lib compose
     implementation("androidx.compose.foundation:foundation:1.5.0")
-    implementation("androidx.navigation:navigation-compose:2.7.0")
+    implementation("androidx.navigation:navigation-compose:2.7.1")
     implementation("androidx.paging:paging-compose:3.2.0")
 
     //lifecycle

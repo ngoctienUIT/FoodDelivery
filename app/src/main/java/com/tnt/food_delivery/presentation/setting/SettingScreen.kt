@@ -3,7 +3,6 @@ package com.tnt.food_delivery.presentation.setting
 import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -24,7 +23,6 @@ import com.tnt.food_delivery.ui.theme.FoodDeliveryTheme
 import com.tnt.food_delivery.ui.theme.LocalTheme
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SettingScreen(
     navController: NavController,

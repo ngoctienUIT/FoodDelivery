@@ -3,11 +3,9 @@ package com.tnt.food_delivery.presentation.sign_up_process
 import android.app.DatePickerDialog
 import android.util.Log
 import android.widget.DatePicker
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.interaction.collectIsPressedAsState
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,11 +18,9 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -34,7 +30,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardCapitalization
@@ -50,14 +45,13 @@ import com.tnt.food_delivery.core.components.ShowLoading
 import com.tnt.food_delivery.core.components.showToast
 import com.tnt.food_delivery.core.utils.EventStatus
 import com.tnt.food_delivery.core.utils.NavDestinations
-import com.tnt.food_delivery.ui.components.BackButton
+import com.tnt.food_delivery.ui.components.CustomScaffold
 import com.tnt.food_delivery.ui.components.GradientButton
 import com.tnt.food_delivery.ui.components.shadow
 import com.tnt.food_delivery.ui.theme.FoodDeliveryTheme
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SignUpProcessScreen(
     navController: NavController,
@@ -103,95 +97,83 @@ fun SignUpProcessScreen(
     )
     datePicker.datePicker.maxDate = calendar.timeInMillis
 
-    Scaffold {
-        it
-        Box {
-            Image(
-                modifier = Modifier.fillMaxWidth(),
-                painter = painterResource(id = R.drawable.triangle_background),
-                contentDescription = "tnt"
+    CustomScaffold(navController = navController, bgImage = R.drawable.triangle_background) {
+        Column(
+            modifier = Modifier
+                .padding(horizontal = 25.dp)
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+        ) {
+            Text(
+                modifier = Modifier.padding(end = 60.dp),
+                text = "Fill in your bio to get started",
+                fontSize = 25.sp,
+                fontWeight = FontWeight.Bold
             )
-            Column(
-                modifier = Modifier
-                    .padding(horizontal = 25.dp)
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(
+                modifier = Modifier.padding(end = 90.dp),
+                text = "This data will be displayed in your account profile for security",
+                fontSize = 12.sp,
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            CustomTextField(
+                value = viewModel.fullname.value,
+                onValueChange = { value ->
+                    viewModel.fullname.value = value
+                    viewModel.validateFullName()
+                },
+                hintText = "Full Name",
+                error = viewModel.fullNameErrMsg.value,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next,
+                    capitalization = KeyboardCapitalization.Words
+                )
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            CustomTextField(
+                value = viewModel.birthday.value,
+                onValueChange = { value -> viewModel.birthday.value = value },
+                hintText = "Birthday",
+                onClick = { datePicker.show() },
+                error = viewModel.birthdayErrMsg.value
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            CustomTextField(
+                value = viewModel.phoneNumber.value,
+                onValueChange = { value ->
+                    viewModel.phoneNumber.value = value
+                    viewModel.validatePhoneNumber()
+                },
+                hintText = "Mobile Number",
+                error = viewModel.phoneNumberErrMsg.value,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next,
+                    keyboardType = KeyboardType.Phone
+                )
+            )
+            Spacer(modifier = Modifier.height(50.dp))
+            Row(
+                modifier = Modifier.fillMaxWidth(),
+                horizontalArrangement = Arrangement.Center
             ) {
-                BackButton {
-                    navController.popBackStack()
-                }
-                Text(
-                    modifier = Modifier.padding(end = 60.dp),
-                    text = "Fill in your bio to get started",
-                    fontSize = 25.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                Text(
-                    modifier = Modifier.padding(end = 90.dp),
-                    text = "This data will be displayed in your account profile for security",
-                    fontSize = 12.sp,
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                CustomTextField(
-                    value = viewModel.fullname.value,
-                    onValueChange = { value ->
-                        viewModel.fullname.value = value
-                        viewModel.validateFullName()
+                GradientButton(
+                    modifier = Modifier
+                        .height(56.dp)
+                        .width(157.dp),
+                    text = "Next",
+                    onClick = {
+                        coroutineScope.launch { viewModel.signup(username, email, password) }
                     },
-                    hintText = "Full Name",
-                    error = viewModel.fullNameErrMsg.value,
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next,
-                        capitalization = KeyboardCapitalization.Words
-                    )
+                    isEnable = viewModel.isEnableButton.value
                 )
-                Spacer(modifier = Modifier.height(20.dp))
-                CustomTextField(
-                    value = viewModel.birthday.value,
-                    onValueChange = { value -> viewModel.birthday.value = value },
-                    hintText = "Birthday",
-                    onClick = { datePicker.show() },
-                    error = viewModel.birthdayErrMsg.value
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                CustomTextField(
-                    value = viewModel.phoneNumber.value,
-                    onValueChange = { value ->
-                        viewModel.phoneNumber.value = value
-                        viewModel.validatePhoneNumber()
-                    },
-                    hintText = "Mobile Number",
-                    error = viewModel.phoneNumberErrMsg.value,
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next,
-                        keyboardType = KeyboardType.Phone
-                    )
-                )
-                Spacer(modifier = Modifier.height(50.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.Center
-                ) {
-                    GradientButton(
-                        modifier = Modifier
-                            .height(56.dp)
-                            .width(157.dp),
-                        text = "Next",
-                        onClick = {
-                            coroutineScope.launch { viewModel.signup(username, email, password) }
-                        },
-                        isEnable = viewModel.isEnableButton.value
-                    )
-                }
-                Spacer(modifier = Modifier.height(50.dp))
-                if (state.status == EventStatus.LOADING) ShowLoading()
             }
+            Spacer(modifier = Modifier.height(50.dp))
+            if (state.status == EventStatus.LOADING) ShowLoading()
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomTextField(
     value: String,
@@ -214,10 +196,11 @@ fun CustomTextField(
                     spread = 25.dp,
                     blurRadius = 60.dp
                 ),
-            colors = TextFieldDefaults.outlinedTextFieldColors(
+            colors = OutlinedTextFieldDefaults.colors(
                 disabledBorderColor = Color.Transparent,
                 unfocusedBorderColor = Color.Transparent,
-                containerColor = Color.White,
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White,
             ),
             value = value,
             onValueChange = onValueChange,

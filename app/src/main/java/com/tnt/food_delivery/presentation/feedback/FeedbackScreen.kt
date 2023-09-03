@@ -49,7 +49,7 @@ import com.tnt.food_delivery.ui.components.GradientButton
 import com.tnt.food_delivery.presentation.sign_up.CustomTextField
 import com.tnt.food_delivery.ui.theme.FoodDeliveryTheme
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalTextApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FeedbackScreen(navController: NavController) {
     val configuration = LocalConfiguration.current

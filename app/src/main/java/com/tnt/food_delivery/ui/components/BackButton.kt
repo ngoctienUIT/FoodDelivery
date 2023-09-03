@@ -20,13 +20,13 @@ import com.tnt.food_delivery.R
 
 @Composable
 fun BackButton(
-    modifier: Modifier = Modifier.padding(top = 38.dp, bottom = 20.dp),
+    modifier: Modifier = Modifier,
     backgroundColor: Color = Color(0xFFF9A84D).copy(alpha = 0.1f),
     onClick: () -> Unit,
 ) {
     Card(
         modifier = modifier.clickable { onClick() },
-        shape = RoundedCornerShape(15),
+        shape = RoundedCornerShape(15.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         colors = CardDefaults.cardColors(containerColor = backgroundColor)
     ) {

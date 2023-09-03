@@ -35,7 +35,7 @@ import kotlinx.coroutines.launch
 @ExperimentalMaterial3Api
 @Composable
 fun OnboardingScreen() {
-    val list = listOf<Map<String, Any>>(
+    val list = listOf(
         mapOf(
             "image" to R.drawable.onboarding_light_1,
             "title" to "Find your  Comfort Food here",
@@ -47,18 +47,17 @@ fun OnboardingScreen() {
         )
     )
 
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(initialPage = 0, pageCount = { 2 })
     val scope = rememberCoroutineScope()
 
-    Scaffold()
-    {
+    Scaffold() {
         it
         Column(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.SpaceEvenly,
             modifier = Modifier.fillMaxSize(),
         ) {
-            HorizontalPager(pageCount = 2, userScrollEnabled = false, state = pagerState)
+            HorizontalPager(userScrollEnabled = false, state = pagerState)
             {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
