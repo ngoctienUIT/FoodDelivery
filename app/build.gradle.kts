@@ -1,3 +1,5 @@
+import kotlin.collections.listOf
+
 plugins {
     id("com.android.application")
     id("com.google.devtools.ksp")
@@ -17,6 +19,8 @@ android {
         versionName = "1.0.0"
         minSdk = 26
         targetSdk = 33
+
+        resourceConfigurations += listOf("vi", "en")
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -71,6 +75,9 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.0")
     debugImplementation("androidx.compose.ui:ui-tooling:1.5.0")
     debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.0")
+
+    //appcompat
+    implementation("androidx.appcompat:appcompat:1.7.0-alpha03")
 
     // toolbar
     implementation("me.onebone:toolbar-compose:2.3.2")

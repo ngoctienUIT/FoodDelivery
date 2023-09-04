@@ -16,8 +16,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -31,101 +29,98 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.tnt.food_delivery.R
+import com.tnt.food_delivery.ui.components.CustomScaffold
 import com.tnt.food_delivery.ui.components.GradientButton
 import com.tnt.food_delivery.ui.components.shadow
 import com.tnt.food_delivery.ui.theme.FoodDeliveryTheme
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalLayoutApi::class)
+@OptIn(ExperimentalLayoutApi::class)
 @Composable
 fun FilterScreen(navController: NavController) {
-    Scaffold {
-        it
-        Box {
-            Image(
-                modifier = Modifier.fillMaxWidth(),
-                painter = painterResource(id = R.drawable.triangle_home_background),
-                contentDescription = "tnt"
-            )
-            Column(
-                modifier = Modifier.padding(horizontal = 25.dp),
+    CustomScaffold(
+        navController = navController,
+        bgImage = R.drawable.triangle_home_background,
+        isTabBar = false
+    ) {
+        Column(
+            modifier = Modifier.padding(horizontal = 25.dp),
+        ) {
+            Row(
+                modifier = Modifier
+                    .padding(top = 60.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceEvenly
             ) {
-                Row(
+                Text(
                     modifier = Modifier
-                        .padding(top = 60.dp),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceEvenly
-                ) {
-                    Text(
-                        modifier = Modifier
-                            .padding(end = 60.dp)
-                            .fillMaxWidth(fraction = 0.75f),
-                        text = "Find Your Favorite Food",
-                        fontSize = 30.sp,
-                        fontWeight = FontWeight.Bold,
-                        lineHeight = 40.sp,
-                        maxLines = 2,
-                    )
-                    Card(
-                        modifier = Modifier
-                            .height(45.dp)
-                            .width(45.dp)
-                            .shadow(
-                                color = Color(0xFF144E5A).copy(alpha = 0.2f),
-                                spread = 15.dp,
-                                blurRadius = 50.dp,
-                                offsetX = 11.dp,
-                                offsetY = 28.dp,
-                            ),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color.White),
-                        shape = RoundedCornerShape(30)
-                    ) {
-                        Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center)
-                        {
-                            Image(
-                                modifier = Modifier
-                                    .height(25.dp)
-                                    .width(25.dp),
-                                painter = painterResource(id = R.drawable.icon_notifiaction),
-                                contentDescription = "tnt"
-                            )
-                        }
-
-                    }
-                }
-                Spacer(modifier = Modifier.height(20.dp))
-                Text(text = "Type", fontSize = 15.sp, fontWeight = FontWeight.Bold)
-                Spacer(modifier = Modifier.height(20.dp))
-                Row {
-                    CustomItemFilter(text = "Restaurant")
-                    CustomItemFilter(text = "Menu")
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-                Text(text = "Location", fontSize = 15.sp, fontWeight = FontWeight.Bold)
-                Spacer(modifier = Modifier.height(10.dp))
-                Row {
-                    CustomItemFilter(text = "1 Km")
-                    CustomItemFilter(text = ">10 Km")
-                    CustomItemFilter(text = "<10 Km")
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-                Text(text = "Food", fontSize = 15.sp, fontWeight = FontWeight.Bold)
-                Spacer(modifier = Modifier.height(10.dp))
-                FlowRow {
-                    CustomItemFilter(text = "Cake")
-                    CustomItemFilter(text = "Soup")
-                    CustomItemFilter(text = "Main Course")
-                    CustomItemFilter(text = "Appetizer")
-                    CustomItemFilter(text = "Dessert")
-                }
-                Spacer(modifier = Modifier.height(50.dp))
-                GradientButton(
-                    text = "Search",
-                    modifier = Modifier
-                        .height(56.dp)
-                        .fillMaxWidth(),
+                        .padding(end = 60.dp)
+                        .fillMaxWidth(fraction = 0.75f),
+                    text = "Find Your Favorite Food",
+                    fontSize = 30.sp,
+                    fontWeight = FontWeight.Bold,
+                    lineHeight = 40.sp,
+                    maxLines = 2,
                 )
+                Card(
+                    modifier = Modifier
+                        .height(45.dp)
+                        .width(45.dp)
+                        .shadow(
+                            color = Color(0xFF144E5A).copy(alpha = 0.2f),
+                            spread = 15.dp,
+                            blurRadius = 50.dp,
+                            offsetX = 11.dp,
+                            offsetY = 28.dp,
+                        ),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+                    colors = CardDefaults.cardColors(containerColor = Color.White),
+                    shape = RoundedCornerShape(30)
+                ) {
+                    Box(modifier = Modifier.fillMaxSize(), contentAlignment = Alignment.Center)
+                    {
+                        Image(
+                            modifier = Modifier
+                                .height(25.dp)
+                                .width(25.dp),
+                            painter = painterResource(id = R.drawable.icon_notifiaction),
+                            contentDescription = "tnt"
+                        )
+                    }
+
+                }
             }
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(text = "Type", fontSize = 15.sp, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(20.dp))
+            Row {
+                CustomItemFilter(text = "Restaurant")
+                CustomItemFilter(text = "Menu")
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(text = "Location", fontSize = 15.sp, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(10.dp))
+            Row {
+                CustomItemFilter(text = "1 Km")
+                CustomItemFilter(text = ">10 Km")
+                CustomItemFilter(text = "<10 Km")
+            }
+            Spacer(modifier = Modifier.height(10.dp))
+            Text(text = "Food", fontSize = 15.sp, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(10.dp))
+            FlowRow {
+                CustomItemFilter(text = "Cake")
+                CustomItemFilter(text = "Soup")
+                CustomItemFilter(text = "Main Course")
+                CustomItemFilter(text = "Appetizer")
+                CustomItemFilter(text = "Dessert")
+            }
+            Spacer(modifier = Modifier.height(50.dp))
+            GradientButton(
+                text = "Search",
+                modifier = Modifier
+                    .height(56.dp)
+                    .fillMaxWidth(),
+            )
         }
     }
 }

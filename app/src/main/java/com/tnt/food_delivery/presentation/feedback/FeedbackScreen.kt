@@ -4,7 +4,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -19,7 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -47,6 +45,7 @@ import androidx.navigation.compose.rememberNavController
 import com.tnt.food_delivery.R
 import com.tnt.food_delivery.ui.components.GradientButton
 import com.tnt.food_delivery.presentation.sign_up.CustomTextField
+import com.tnt.food_delivery.ui.components.CustomScaffold
 import com.tnt.food_delivery.ui.theme.FoodDeliveryTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -54,99 +53,95 @@ import com.tnt.food_delivery.ui.theme.FoodDeliveryTheme
 fun FeedbackScreen(navController: NavController) {
     val configuration = LocalConfiguration.current
     var feedback by rememberSaveable { mutableStateOf("") }
-    
-    Scaffold {
-        it
-        Box {
-            Image(
-                modifier = Modifier.fillMaxWidth(),
-                painter = painterResource(id = R.drawable.background_light),
-                contentDescription = "tnt"
-            )
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
+
+    CustomScaffold(
+        navController = navController,
+        bgImage = R.drawable.background_light,
+        isTabBar = false
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
 //                verticalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+        ) {
+            Spacer(modifier = Modifier.height((configuration.screenWidthDp * 0.4).dp))
+            Image(
+                painter = painterResource(id = R.drawable.restaurant_img),
+                contentDescription = "test",
+                contentScale = ContentScale.Crop,
                 modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
-            ) {
-                Spacer(modifier = Modifier.height((configuration.screenWidthDp * 0.4).dp))
-                Image(
-                    painter = painterResource(id = R.drawable.restaurant_img),
-                    contentDescription = "test",
-                    contentScale = ContentScale.Crop,
-                    modifier = Modifier
-                        .size((configuration.screenWidthDp * 0.5).dp)
-                        .clip(RoundedCornerShape(90))
-                        .border(
-                            width = 7.dp,
-                            shape = RoundedCornerShape(90),
-                            brush = Brush.horizontalGradient(
-                                listOf(Color(0xFF53E88B), Color(0xFF15BE77)),
-                            ),
-                        )
-                )
-                Spacer(modifier = Modifier.height(40.dp))
-                Text(
-                    text = "Thank You!\nEnjoy Your Meal",
-                    fontSize = 25.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = Color(0xFF09051C),
-                    textAlign = TextAlign.Center
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                Text(
-                    text = "Please rate your Food",
-                    fontSize = 14.sp,
-                    color = Color(0xFF3B3B3B).copy(0.3f),
-                    letterSpacing = 0.5.sp
-                )
-                RateStar(
-                    index = 2,
-                    modifier = Modifier.fillMaxWidth(),
-                    onClick = { }
-                )
-                Spacer(modifier = Modifier.height(50.dp))
-                CustomTextField(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 25.dp)
-                        .border(
-                            width = 1.dp, color = Color(0xFFE8E8E8), shape = RoundedCornerShape(30),
+                    .size((configuration.screenWidthDp * 0.5).dp)
+                    .clip(RoundedCornerShape(90))
+                    .border(
+                        width = 7.dp,
+                        shape = RoundedCornerShape(90),
+                        brush = Brush.horizontalGradient(
+                            listOf(Color(0xFF53E88B), Color(0xFF15BE77)),
                         ),
-                    icon = R.drawable.icon_edit,
-                    value = feedback,
-                    onValueChange = { value -> feedback = value },
-                    placeholder = "Leave feedback"
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Spacer(modifier = Modifier.width(20.dp))
-                    GradientButton(
-                        modifier = Modifier
-                            .height(56.dp)
-                            .weight(4f),
-                        text = "Submit"
                     )
-                    Spacer(modifier = Modifier.width(20.dp))
-                    TextButton(
-                        modifier = Modifier
-                            .height(56.dp)
-                            .weight(1f),
-                        onClick = { /*TODO*/ }) {
-                        Text(
-                            text = "Skip",
-                            fontSize = 14.sp,
-                            fontWeight = FontWeight.Bold,
-                            style = TextStyle(
-                                brush = Brush.linearGradient(
-                                    colors = listOf(Color(0xFF53E88B), Color(0xFF15BE77))
-                                )
+            )
+            Spacer(modifier = Modifier.height(40.dp))
+            Text(
+                text = "Thank You!\nEnjoy Your Meal",
+                fontSize = 25.sp,
+                fontWeight = FontWeight.Bold,
+                color = Color(0xFF09051C),
+                textAlign = TextAlign.Center
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(
+                text = "Please rate your Food",
+                fontSize = 14.sp,
+                color = Color(0xFF3B3B3B).copy(0.3f),
+                letterSpacing = 0.5.sp
+            )
+            RateStar(
+                index = 2,
+                modifier = Modifier.fillMaxWidth(),
+                onClick = { }
+            )
+            Spacer(modifier = Modifier.height(50.dp))
+            CustomTextField(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 25.dp)
+                    .border(
+                        width = 1.dp, color = Color(0xFFE8E8E8), shape = RoundedCornerShape(30),
+                    ),
+                icon = R.drawable.icon_edit,
+                value = feedback,
+                onValueChange = { value -> feedback = value },
+                placeholder = "Leave feedback"
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            Row(verticalAlignment = Alignment.CenterVertically) {
+                Spacer(modifier = Modifier.width(20.dp))
+                GradientButton(
+                    modifier = Modifier
+                        .height(56.dp)
+                        .weight(4f),
+                    text = "Submit"
+                )
+                Spacer(modifier = Modifier.width(20.dp))
+                TextButton(
+                    modifier = Modifier
+                        .height(56.dp)
+                        .weight(1f),
+                    onClick = { /*TODO*/ }) {
+                    Text(
+                        text = "Skip",
+                        fontSize = 14.sp,
+                        fontWeight = FontWeight.Bold,
+                        style = TextStyle(
+                            brush = Brush.linearGradient(
+                                colors = listOf(Color(0xFF53E88B), Color(0xFF15BE77))
                             )
                         )
-                    }
-                    Spacer(modifier = Modifier.width(20.dp))
+                    )
                 }
+                Spacer(modifier = Modifier.width(20.dp))
             }
         }
     }

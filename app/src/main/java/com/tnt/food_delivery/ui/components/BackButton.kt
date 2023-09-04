@@ -25,7 +25,9 @@ fun BackButton(
     onClick: () -> Unit,
 ) {
     Card(
-        modifier = modifier.clickable { onClick() },
+        modifier = modifier
+            .padding(start = 5.dp)
+            .clickable { onClick() },
         shape = RoundedCornerShape(15.dp),
         elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
         colors = CardDefaults.cardColors(containerColor = backgroundColor)

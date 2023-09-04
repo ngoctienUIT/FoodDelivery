@@ -24,27 +24,29 @@ fun CustomScaffold(
     bgImage: Int,
     title: String? = null,
     navigationIcon: @Composable (() -> Unit)? = null,
+    isTabBar: Boolean = true,
     content: @Composable () -> Unit
 ) {
     Scaffold(
         topBar = {
-            CenterAlignedTopAppBar(
-                colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = Color.Transparent),
-                title = {
-                    if (title != null)
-                        Text(
-                            text = title,
-                            fontWeight = FontWeight.Bold,
-                            color = Color(0xFF09051C)
-                        )
-                },
-                navigationIcon = {
-                    if (navigationIcon == null)
-                        BackButton {
-                            navController.popBackStack()
-                        }
-                }
-            )
+            if (isTabBar)
+                CenterAlignedTopAppBar(
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = Color.Transparent),
+                    title = {
+                        if (title != null)
+                            Text(
+                                text = title,
+                                fontWeight = FontWeight.Bold,
+                                color = Color(0xFF09051C)
+                            )
+                    },
+                    navigationIcon = {
+                        if (navigationIcon == null)
+                            BackButton {
+                                navController.popBackStack()
+                            }
+                    }
+                )
         },
         containerColor = Color.Transparent
     ) {

@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -22,10 +21,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -58,6 +56,7 @@ import com.tnt.food_delivery.core.components.showToast
 import com.tnt.food_delivery.core.utils.EventStatus
 import com.tnt.food_delivery.core.utils.NavDestinations
 import com.tnt.food_delivery.data.DataStoreManager
+import com.tnt.food_delivery.ui.components.CustomScaffold
 import com.tnt.food_delivery.ui.components.GradientButton
 import com.tnt.food_delivery.ui.components.shadow
 import com.tnt.food_delivery.ui.components.LogoApp
@@ -103,99 +102,94 @@ fun SignInScreen(navController: NavController, viewModel: SignInViewModel = hilt
         }
     }
 
-    Scaffold {
-        it
-        Box {
-            Image(
-                modifier = Modifier.fillMaxWidth(),
-                painter = painterResource(id = R.drawable.background_light),
-                contentDescription = "tnt"
-            )
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
+    CustomScaffold(
+        navController = navController,
+        bgImage = R.drawable.background_light,
+        isTabBar = false
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
 //                verticalArrangement = Arrangement.SpaceEvenly,
-                modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+        ) {
+            Spacer(modifier = Modifier.height(40.dp))
+            LogoApp()
+            Spacer(modifier = Modifier.height(60.dp))
+            Text(text = "Login To Your Account", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(40.dp))
+            CustomTextField(
+                placeholder = "Username",
+                value = viewModel.username.value,
+                onValueChange = { text ->
+                    viewModel.username.value = text
+                    viewModel.validateUsername()
+                },
+                error = viewModel.usernameErrMsg.value
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            CustomTextField(
+                placeholder = "Password",
+                value = viewModel.password.value,
+                onValueChange = { text ->
+                    viewModel.password.value = text
+                    viewModel.validatePassword()
+                },
+                error = viewModel.passwordErrMsg.value,
+                isHide = isHide,
+                onChange = { isHide = !isHide },
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            Text(text = "Or Continue With", fontSize = 14.sp, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(40.dp))
+            Row(
+                horizontalArrangement = Arrangement.SpaceEvenly,
+                modifier = Modifier.fillMaxWidth(),
             ) {
-                Spacer(modifier = Modifier.height(40.dp))
-                LogoApp()
-                Spacer(modifier = Modifier.height(60.dp))
-                Text(text = "Login To Your Account", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                Spacer(modifier = Modifier.height(40.dp))
-                CustomTextField(
-                    placeholder = "Username",
-                    value = viewModel.username.value,
-                    onValueChange = { text ->
-                        viewModel.username.value = text
-                        viewModel.validateUsername()
-                    },
-                    error = viewModel.usernameErrMsg.value
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-                CustomTextField(
-                    placeholder = "Password",
-                    value = viewModel.password.value,
-                    onValueChange = { text ->
-                        viewModel.password.value = text
-                        viewModel.validatePassword()
-                    },
-                    error = viewModel.passwordErrMsg.value,
-                    isHide = isHide,
-                    onChange = { isHide = !isHide },
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                Text(text = "Or Continue With", fontSize = 14.sp, fontWeight = FontWeight.Bold)
-                Spacer(modifier = Modifier.height(40.dp))
-                Row(
-                    horizontalArrangement = Arrangement.SpaceEvenly,
-                    modifier = Modifier.fillMaxWidth(),
-                ) {
-                    CustomSocialButton(text = "Facebook", id = R.drawable.facebook_logo)
-                    CustomSocialButton(text = "Google", id = R.drawable.google_logo)
-                }
-                Spacer(modifier = Modifier.height(20.dp))
-                TextButton(onClick = { }) {
-                    Text(
-                        text = "Forgot Your Password?", style = TextStyle(
-                            brush = Brush.linearGradient(
-                                colors = listOf(Color(0xFF53E88B), Color(0xFF15BE77))
-                            )
-                        )
-                    )
-                }
-                Spacer(modifier = Modifier.height(36.dp))
-                GradientButton(
-                    text = "Login",
-                    onClick = { coroutineScope.launch { viewModel.login() } },
-                    modifier = Modifier
-                        .height(56.dp)
-                        .width(157.dp),
-                    isEnable = viewModel.isEnableButton.value
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                TextButton(onClick = {
-                    navController.navigate(NavDestinations.SIGNUP_SCREEN)
-                    {
-                        popUpTo(NavDestinations.SIGNIN_SCREEN) { inclusive = true }
-                    }
-                }) {
-                    Text(
-                        text = "You don't have an account?", style = TextStyle(
-                            brush = Brush.linearGradient(
-                                colors = listOf(Color(0xFF53E88B), Color(0xFF15BE77))
-                            )
-                        )
-                    )
-                }
-                Spacer(modifier = Modifier.height(20.dp))
-                if (state.status == EventStatus.LOADING) ShowLoading()
+                CustomSocialButton(text = "Facebook", id = R.drawable.facebook_logo)
+                CustomSocialButton(text = "Google", id = R.drawable.google_logo)
             }
+            Spacer(modifier = Modifier.height(20.dp))
+            TextButton(onClick = { }) {
+                Text(
+                    text = "Forgot Your Password?", style = TextStyle(
+                        brush = Brush.linearGradient(
+                            colors = listOf(Color(0xFF53E88B), Color(0xFF15BE77))
+                        )
+                    )
+                )
+            }
+            Spacer(modifier = Modifier.height(36.dp))
+            GradientButton(
+                text = "Login",
+                onClick = { coroutineScope.launch { viewModel.login() } },
+                modifier = Modifier
+                    .height(56.dp)
+                    .width(157.dp),
+                isEnable = viewModel.isEnableButton.value
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            TextButton(onClick = {
+                navController.navigate(NavDestinations.SIGNUP_SCREEN)
+                {
+                    popUpTo(NavDestinations.SIGNIN_SCREEN) { inclusive = true }
+                }
+            }) {
+                Text(
+                    text = "You don't have an account?", style = TextStyle(
+                        brush = Brush.linearGradient(
+                            colors = listOf(Color(0xFF53E88B), Color(0xFF15BE77))
+                        )
+                    )
+                )
+            }
+            Spacer(modifier = Modifier.height(20.dp))
+            if (state.status == EventStatus.LOADING) ShowLoading()
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CustomTextField(
     modifier: Modifier = Modifier
@@ -221,7 +215,10 @@ fun CustomTextField(
     Column {
         OutlinedTextField(
             modifier = modifier,
-            colors = TextFieldDefaults.outlinedTextFieldColors(containerColor = Color.White),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White,
+            ),
             value = value,
             onValueChange = onValueChange,
             placeholder = { Text(text = placeholder) },

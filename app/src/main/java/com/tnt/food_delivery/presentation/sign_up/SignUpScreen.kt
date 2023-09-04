@@ -4,7 +4,6 @@ import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,10 +18,9 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -55,6 +53,7 @@ import com.tnt.food_delivery.core.components.ShowLoading
 import com.tnt.food_delivery.core.components.showToast
 import com.tnt.food_delivery.core.utils.EventStatus
 import com.tnt.food_delivery.core.utils.NavDestinations
+import com.tnt.food_delivery.ui.components.CustomScaffold
 import com.tnt.food_delivery.ui.components.GradientButton
 import com.tnt.food_delivery.ui.components.shadow
 import com.tnt.food_delivery.ui.components.LogoApp
@@ -99,104 +98,100 @@ fun SignUpScreen(navController: NavController, viewModel: SignUpViewModel = hilt
         }
     }
 
-    Scaffold {
-        it
-        Box {
-            Image(
-                modifier = Modifier.fillMaxWidth(),
-                painter = painterResource(id = R.drawable.background_light),
-                contentDescription = "tnt"
-            )
-            Column(
-                horizontalAlignment = Alignment.CenterHorizontally,
+    CustomScaffold(
+        navController = navController,
+        bgImage = R.drawable.background_light,
+        isTabBar = false
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
 //                verticalArrangement = Arrangement.SpaceEvenly,
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState()),
+        ) {
+            Spacer(modifier = Modifier.height(40.dp))
+            LogoApp()
+            Spacer(modifier = Modifier.height(60.dp))
+            Text(text = "Sign Up For Free", fontSize = 20.sp, fontWeight = FontWeight.Bold)
+            Spacer(modifier = Modifier.height(40.dp))
+            CustomTextField(
+                icon = R.drawable.icon_profile,
+                value = viewModel.username.value,
+                onValueChange = { value ->
+                    viewModel.username.value = value
+                    viewModel.validateUsername()
+                },
+                placeholder = "Username",
+                error = viewModel.usernameErrMsg.value
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            CustomTextField(
+                icon = R.drawable.icon_email,
+                value = viewModel.email.value,
+                onValueChange = { value ->
+                    viewModel.email.value = value
+                    viewModel.validateEmail()
+                },
+                placeholder = "Email",
+                error = viewModel.emailErrMsg.value,
+                keyboardOptions = KeyboardOptions(
+                    imeAction = ImeAction.Next,
+                    keyboardType = KeyboardType.Email
+                ),
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            CustomTextField(
+                icon = R.drawable.icon_lock,
+                value = viewModel.password.value,
+                onValueChange = { value ->
+                    viewModel.password.value = value
+                    viewModel.validatePassword()
+                },
+                placeholder = "Password",
+                error = viewModel.passwordErrMsg.value,
+                isHide = isHidePassword,
+                onChange = { isHidePassword = !isHidePassword },
+            )
+            Spacer(modifier = Modifier.height(12.dp))
+            CustomTextField(
+                icon = R.drawable.icon_lock,
+                value = viewModel.confirmPassword.value,
+                onValueChange = { value ->
+                    viewModel.confirmPassword.value = value
+                    viewModel.validateConfirmPassword()
+                },
+                placeholder = "Confirm Password",
+                error = viewModel.confirmPasswordErrMsg.value,
+                isHide = isHideConfirmPassword,
+                onChange = { isHideConfirmPassword = !isHideConfirmPassword },
+            )
+            Spacer(modifier = Modifier.height(44.dp))
+            GradientButton(
+                text = "Create Account",
                 modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState()),
-            ) {
-                Spacer(modifier = Modifier.height(40.dp))
-                LogoApp()
-                Spacer(modifier = Modifier.height(60.dp))
-                Text(text = "Sign Up For Free", fontSize = 20.sp, fontWeight = FontWeight.Bold)
-                Spacer(modifier = Modifier.height(40.dp))
-                CustomTextField(
-                    icon = R.drawable.icon_profile,
-                    value = viewModel.username.value,
-                    onValueChange = { value ->
-                        viewModel.username.value = value
-                        viewModel.validateUsername()
-                    },
-                    placeholder = "Username",
-                    error = viewModel.usernameErrMsg.value
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-                CustomTextField(
-                    icon = R.drawable.icon_email,
-                    value = viewModel.email.value,
-                    onValueChange = { value ->
-                        viewModel.email.value = value
-                        viewModel.validateEmail()
-                    },
-                    placeholder = "Email",
-                    error = viewModel.emailErrMsg.value,
-                    keyboardOptions = KeyboardOptions(
-                        imeAction = ImeAction.Next,
-                        keyboardType = KeyboardType.Email
-                    ),
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-                CustomTextField(
-                    icon = R.drawable.icon_lock,
-                    value = viewModel.password.value,
-                    onValueChange = { value ->
-                        viewModel.password.value = value
-                        viewModel.validatePassword()
-                    },
-                    placeholder = "Password",
-                    error = viewModel.passwordErrMsg.value,
-                    isHide = isHidePassword,
-                    onChange = { isHidePassword = !isHidePassword },
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-                CustomTextField(
-                    icon = R.drawable.icon_lock,
-                    value = viewModel.confirmPassword.value,
-                    onValueChange = { value ->
-                        viewModel.confirmPassword.value = value
-                        viewModel.validateConfirmPassword()
-                    },
-                    placeholder = "Confirm Password",
-                    error = viewModel.confirmPasswordErrMsg.value,
-                    isHide = isHideConfirmPassword,
-                    onChange = { isHideConfirmPassword = !isHideConfirmPassword },
-                )
-                Spacer(modifier = Modifier.height(44.dp))
-                GradientButton(
-                    text = "Create Account",
-                    modifier = Modifier
-                        .height(56.dp)
-                        .width(157.dp),
-                    isEnable = viewModel.isEnableButton.value,
-                    onClick = { coroutineScope.launch { viewModel.checkRegister() } }
-                )
-                Spacer(modifier = Modifier.height(20.dp))
-                TextButton(onClick = {
-                    navController.navigate(NavDestinations.SIGNIN_SCREEN)
-                    {
-                        popUpTo(NavDestinations.SIGNUP_SCREEN) { inclusive = true }
-                    }
-                }) {
-                    Text(
-                        text = "Already have an account?", style = TextStyle(
-                            brush = Brush.linearGradient(
-                                colors = listOf(Color(0xFF53E88B), Color(0xFF15BE77))
-                            )
+                    .height(56.dp)
+                    .width(157.dp),
+                isEnable = viewModel.isEnableButton.value,
+                onClick = { coroutineScope.launch { viewModel.checkRegister() } }
+            )
+            Spacer(modifier = Modifier.height(20.dp))
+            TextButton(onClick = {
+                navController.navigate(NavDestinations.SIGNIN_SCREEN)
+                {
+                    popUpTo(NavDestinations.SIGNUP_SCREEN) { inclusive = true }
+                }
+            }) {
+                Text(
+                    text = "Already have an account?", style = TextStyle(
+                        brush = Brush.linearGradient(
+                            colors = listOf(Color(0xFF53E88B), Color(0xFF15BE77))
                         )
                     )
-                }
-                Spacer(modifier = Modifier.height(20.dp))
-                if (state.status == EventStatus.LOADING) ShowLoading()
+                )
             }
+            Spacer(modifier = Modifier.height(20.dp))
+            if (state.status == EventStatus.LOADING) ShowLoading()
         }
     }
 }
@@ -231,7 +226,10 @@ fun CustomTextField(
             modifier = modifier,
             value = value,
             isError = error.isNotEmpty(),
-            colors = TextFieldDefaults.outlinedTextFieldColors(containerColor = Color.White),
+            colors = OutlinedTextFieldDefaults.colors(
+                focusedContainerColor = Color.White,
+                unfocusedContainerColor = Color.White,
+            ),
             onValueChange = onValueChange,
             placeholder = {
                 Text(
