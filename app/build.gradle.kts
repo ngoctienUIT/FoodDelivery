@@ -6,7 +6,6 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
-    id("kotlin-kapt")
 }
 
 android {
@@ -49,7 +48,7 @@ android {
         buildConfig = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = "1.4.3"
+        kotlinCompilerExtensionVersion = "1.5.0"
     }
     packaging {
         resources {
@@ -95,9 +94,9 @@ dependencies {
     implementation("androidx.datastore:datastore-preferences:1.0.0")
 
     //hilt - dagger
-    implementation("com.google.dagger:hilt-android:2.45")
+    implementation("com.google.dagger:hilt-android:2.48")
     implementation("androidx.hilt:hilt-navigation-compose:1.1.0-alpha01")
-    kapt("com.google.dagger:hilt-compiler:2.45")
+    ksp("com.google.dagger:hilt-compiler:2.48")
 
     //lib compose
     implementation("androidx.compose.foundation:foundation:1.5.0")
@@ -112,8 +111,4 @@ dependencies {
 //    implementation("androidx.compose.runtime:runtime-livedata:1.5.0-beta02")
 
 //    implementation ("androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha10"
-}
-
-kapt {
-    correctErrorTypes = true
 }
