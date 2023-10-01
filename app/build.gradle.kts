@@ -9,11 +9,11 @@ plugins {
 }
 
 android {
-    namespace = "com.tnt.food_delivery"
+    namespace = "com.uit.food_delivery"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.tnt.food_delivery"
+        applicationId = "com.uit.food_delivery"
         versionCode = 1
         versionName = "1.0.0"
         minSdk = 26
