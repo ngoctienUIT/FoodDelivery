@@ -5,6 +5,8 @@ plugins {
     id("com.google.devtools.ksp")
     id("org.jetbrains.kotlin.android")
     id("com.google.dagger.hilt.android")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
     id("kotlin-parcelize")
 }
 
@@ -59,21 +61,21 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.10.1")
+    implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.activity:activity-compose:1.7.2")
-    implementation("androidx.compose.ui:ui:1.5.0")
-    implementation("androidx.compose.ui:ui-graphics:1.5.0")
-    implementation("androidx.compose.ui:ui-tooling-preview:1.5.0")
-    implementation("androidx.compose.material3:material3:1.1.1")
+    implementation("androidx.compose.ui:ui:1.5.2")
+    implementation("androidx.compose.ui:ui-graphics:1.5.2")
+    implementation("androidx.compose.ui:ui-tooling-preview:1.5.2")
+    implementation("androidx.compose.material3:material3:1.1.2")
     implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
     implementation(platform("androidx.compose:compose-bom:2023.03.00"))
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
     androidTestImplementation(platform("androidx.compose:compose-bom:2023.03.00"))
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.0")
-    debugImplementation("androidx.compose.ui:ui-tooling:1.5.0")
-    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.0")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:1.5.2")
+    debugImplementation("androidx.compose.ui:ui-tooling:1.5.2")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:1.5.2")
 
     //appcompat
     implementation("androidx.appcompat:appcompat:1.7.0-alpha03")
@@ -99,16 +101,27 @@ dependencies {
     ksp("com.google.dagger:hilt-compiler:2.48")
 
     //lib compose
-    implementation("androidx.compose.foundation:foundation:1.5.0")
-    implementation("androidx.navigation:navigation-compose:2.7.1")
-    implementation("androidx.paging:paging-compose:3.2.0")
+    implementation("androidx.compose.foundation:foundation:1.5.2")
+    implementation("androidx.navigation:navigation-compose:2.7.3")
+    implementation("androidx.paging:paging-compose:3.2.1")
 
     //lifecycle
-    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.1")
-    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.1")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.6.2")
 //    implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
 //    implementation("androidx.compose.runtime:runtime-livedata:1.5.0-beta02")
 
 //    implementation ("androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha10"
+
+    //firebase
+    implementation(platform("com.google.firebase:firebase-bom:32.3.1"))
+    implementation("com.google.firebase:firebase-analytics-ktx")
+    implementation("com.google.firebase:firebase-messaging-ktx")
+    implementation("com.google.firebase:firebase-crashlytics-ktx")
+
+    //cloudinary
+    implementation("com.cloudinary:cloudinary-android:2.3.1")
+    implementation("com.cloudinary:cloudinary-android-download:2.3.1")
+    implementation("com.cloudinary:cloudinary-android-preprocess:2.3.1")
 }

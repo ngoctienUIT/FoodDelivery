@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "351665018439",
+    "project_id": "food-delivery-uit",
+    "storage_bucket": "food-delivery-uit.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:351665018439:android:9e648ecf2990dfee62c362",
+        "android_client_info": {
+          "package_name": "com.uit.food_delivery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJcnSxLj0y2Zy20yraDuOW4nW-nwQp3CQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
